@@ -1,0 +1,166 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a>node-microdata-scraper (v0.0.4)</a>
+</h1>
+<h4>Scrape a webpage with given URL, parse and extract microdata (schema.org) and return a JSON.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.node-microdata-scraper">module node-microdata-scraper</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.node-microdata-scraper.parse">
+            function <span class="apidocSignatureSpan">node-microdata-scraper.</span>parse
+            <span class="apidocSignatureSpan">(err, resp, html)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.node-microdata-scraper.parseUrl">
+            function <span class="apidocSignatureSpan">node-microdata-scraper.</span>parseUrl
+            <span class="apidocSignatureSpan">(url, callback)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.node-microdata-scraper" id="apidoc.module.node-microdata-scraper">module node-microdata-scraper</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.node-microdata-scraper.parse" id="apidoc.element.node-microdata-scraper.parse">
+        function <span class="apidocSignatureSpan">node-microdata-scraper.</span>parse
+        <span class="apidocSignatureSpan">(err, resp, html)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function parse(err, resp, html) {
+  items = [];
+
+  if (err) return console.error(err)
+  var parsedHTML = $.load(html)
+
+  parsedHTML('[itemtype], [itemprop]').map(function(i, item) {
+
+    if ( $(item).attr("itemtype") &amp;&amp; $(item).attr("itemprop") ) {
+      processTag('itemtype', item);
+      processTag('itemprop', item);
+    } else if ( $(item).attr("itemtype") ) {
+      processTag('itemtype', item);
+    } else if ( $(item).attr("itemprop") ) {
+      processTag('itemprop', item);
+    }
+
+  })
+
+  return JSON.stringify(items);
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.node-microdata-scraper.parseUrl" id="apidoc.element.node-microdata-scraper.parseUrl">
+        function <span class="apidocSignatureSpan">node-microdata-scraper.</span>parseUrl
+        <span class="apidocSignatureSpan">(url, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function parseUrl(url, callback) {
+  var options = {
+    uri: url,
+    method: "GET",
+    followRedirect: true
+  }
+  request(options, function(err, res, body) {
+    if (err) {
+    } else {
+      callback(err, parse(err, res, body));
+      body = null;
+    }
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+```npm install node-microdata-scraper```
+
+##Example
+```javascript
+var microdata = require('node-microdata-scraper');
+var url       = 'https://raw.github.com/mhausenblas/schema-org-rdf/master/examples/Thing/Product/Product.microdata';
+
+microdata.<span class="apidocCodeKeywordSpan">parseUrl</span>(url, function(err, json) {
+  if (!err &amp;&amp; json) {
+    console.log(json);
+  }
+});
+```
+
+Will return:
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
